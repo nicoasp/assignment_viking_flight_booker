@@ -46,3 +46,28 @@ WHERE origins.code = 'LYT' OR destinations.code = 'LYT') AS connections
 WHERE connections.destination_code <> 'LYT';
 
 -- Get a list of all airports visited by user Krystel Senger after January 1, 2012. (Hint, see if you can get a list of all ticket IDs first).
+
+SELECT airports.*
+FROM
+-- ids of destination airports for flights for the given passenger
+(SELECT destination_id
+FROM flights 
+JOIN tickets ON flights.id = tickets.flight_id
+JOIN itineraries ON tickets.itinerary_id = itineraries.id
+JOIN users ON itineraries.user_id = users.id
+WHERE first_name = 'Krystel' 
+AND last_name = 'Senger'
+AND flights.departure_time > '2012-01-01') AS dest_airport_ids
+JOIN airports ON airports.id = dest_airport_ids.destination_id
+
+
+
+
+
+
+
+
+
+
+
+
